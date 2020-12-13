@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
+<script src="https://unpkg.com/video.js/dist/video.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-seek-buttons/dist/videojs-seek-buttons.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/videojs-seek-buttons/dist/videojs-seek-buttons.css" rel="stylesheet"/>
+
+<!--
+  <link href="https://vjs.zencdn.net/7.9.3/video-js.css" rel="stylesheet"/>
+  <script src="https://vjs.zencdn.net/7.9.3/video.js"></script>
+-->
+
+        <script src="https://unpkg.com/@videojs/http-streaming/dist/videojs-http-streaming.js"></script>
+
+
+<!--<link href="{{url_for('static', filename='videojs-audio-tracks.min.css')}}" rel="stylesheet">
+<script src="{{url_for('static', filename='videojs-audio-tracks.min.js')}}"></script>
+-->
+<style>
+  body {
+    font-family: "Lato", sans-serif;
+    margin:50px;
+  }
+
+  .mySlides {
+    display: none
+  }
+
+
+  /* Show the controls (hidden at the start by default) */
+
+  .video-js .vjs-control-bar {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+
+  /* Make the demo a little prettier */
+  body {
+    background: #222;
+    text-align: center;
+    color: #aaa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: radial-gradient(#333, hsl(200, 30%, 6%));
+  }
+
+  a,
+  a:hover,
+  a:visited {
+    color: #76DAFF;
+  }
+
+.video-js {
+position: fixed;
+right: 0;
+bottom: 0;
+min-width: 100%;
+min-height: 100%;
+width: auto;
+height: auto;
+/* z-index: -100; */
+/* background: url(polina.jpg) no-repeat; */
+background-color: black;
+background-size: cover;
+z-index:99999;
+}
+
+
+
+</style>
+
+<body>
+
+  <!-- <h1>Responsive Video.js Example (v4.3)</h1> -->
+  <h1>Pinkesh's Player</h1>
+  <video id="my_video_1" class="video-js vjs-default-skin" controls preload="auto" data-setup='{ "asdf": true }'>
+    <source src="{{url}}" type='{{url_type}}'>
+  </video>
+
+</div>
+
+
+  <!-- <a class="enter-fullscreen" href="#">Play fullscreen</a> -->
+  <script>
+    var myPlayer;
+    $('.enter-fullscreen').click(function(e) {
+      e.preventDefault();
+      $('.vjs-play-control').click();
+      $('.vjs-fullscreen-control').click();
+    });
+
+    videojs('my_video_1', {
+        autoplay: true,
+        fluid: true
+      }).ready(function(){
+      console.log(this.options()); //log all of the default videojs options
+
+      // Store the video object
+      myPlayer = this;
+      var id = myPlayer.id();
+
+      // Make up an aspect ratio
+      var aspectRatio = 264/640; 
+
+      function resizeVideoJS(){
+        var width = document.getElementById(id).parentElement.offsetWidth;
+        console.log(width);
+        myPlayer.width(width);
+        myPlayer.height( width * aspectRatio );
+      }
+      // Initialize resizeVideoJS()
+      resizeVideoJS();
+      // Then on resize call resizeVideoJS()
+      window.onresize = resizeVideoJS; 
+    });
+
+
+setTimeout(function () {
+        myPlayer.play();
+        console.log('running...');
+ myPlayer.seekButtons({
+    forward: 30,
+    back: 10
+  });
+    }, 3000);
+
+
+  </script>
+
+</body>
+
+</html>
